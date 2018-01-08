@@ -1,0 +1,28 @@
+{
+  "name": "domaincanary-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimonJThompson/domaincanary-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimonJThompson/domaincanary-server/issues"
+  },
+  "homepage": "https://github.com/SimonJThompson/domaincanary-server#readme",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^4.0.0",
+    "email-validator": "^1.1.1",
+    "express": "^4.16.2",
+    "ghks": "^1.0.1",
+    "mailgun-js": "^0.14.1"
+  }
+}
