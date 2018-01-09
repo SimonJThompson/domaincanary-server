@@ -1,0 +1,20 @@
+{
+	"name": "domaincanary-server",
+	"description": "Get notified by email when unexpected domains serve your website.",
+	"repository": "https://github.com/SimonJThompson/domaincanary-server",
+	"keywords": ["node", "express", "domaincanary"],
+	"env": {
+		"GITHUB_ACCESS_TOKEN": {
+			"description": "The Personal Access Token generated within your GitHub Account.",
+			"required": true
+		},
+		"MAILGUN_KEY": {
+			"description": "Your API key from Mailgun.",
+			"required": true
+		},
+		"MAILGUN_DOMAIN": {
+			"description": "Your configured domain from Mailgun.",
+			"required": true
+		}
+	}
+}
