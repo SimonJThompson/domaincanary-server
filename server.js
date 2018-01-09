@@ -29,15 +29,15 @@ app.get( '/hit/', (req, res) => {
 	res.header( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept' );
 
 	// Check both of our parameters exist.
-	if ( ! req.query.key ) return res.json( { status: 'error' } );
-	if ( ! req.query.origin ) return res.json( { status: 'error' } );
+	if ( ! req.query.key ) return res.json( { status: 'error', message: 'Missing key parameter.' } );
+	if ( !req.query.origin ) return res.json( { status: 'error', message: 'Missing origin parameter.' } );
 
 	// Get the key / origin stores and check the key exists.
 	let keyStore = ( cache.get( 'keys' ) ) ? cache.get( 'keys' ) : {}
 		,	originStore = (cache.get('origins')) ? cache.get('origins') : {};
 
 	// Check if the key is valid.
-	if ( !keyStore.hasOwnProperty( req.query.key ) ) return res.json( { status: 'error' } );
+	if ( !keyStore.hasOwnProperty( req.query.key ) ) return res.json( { status: 'error', message: 'Invalid key parameter.' } );
 
 	// Check if a notification is required.
 	if (
@@ -73,7 +73,7 @@ app.get( '/hit/', (req, res) => {
 		mailgun.messages().send( message, (error, body) => {
 
 			// Something went wrong. Fail.
-			if (error) return res.json( { status: 'error' } );
+			if (error) return res.json( { status: 'error', message: 'Failed to send notification.' } );
 
 			// Add this hit to the origin store.
 			if (!originStore.hasOwnProperty(req.query.key)) originStore[req.query.key] = {};
