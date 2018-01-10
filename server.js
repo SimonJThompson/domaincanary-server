@@ -34,7 +34,7 @@ app.get( '/hit/', (req, res) => {
 
 	// Get the key / origin stores and check the key exists.
 	let keyStore = ( cache.get( 'keys' ) ) ? cache.get( 'keys' ) : {}
-		,	originStore = (cache.get('origins')) ? cache.get('origins') : {};
+		,	originStore = ( cache.get( 'origins' ) ) ? cache.get( 'origins' ) : {};
 
 	// Check if the key is valid.
 	if ( !keyStore.hasOwnProperty( req.query.key ) ) return res.json( { status: 'error', message: 'Invalid key parameter.' } );
@@ -63,7 +63,7 @@ app.get( '/hit/', (req, res) => {
 				<p>Hi there,</p>
 				<p>Just a quick email to let you know that I've spotted your website is loading from ${req.query.origin.replace(/<\/?[^>]+(>|$)/g,'')} - an origin which isn't in the whitelist you gave me!</p>
 				${uaNotice}
-				<p>I've made a note that I've already sent you this email, so I won't bother you again.</p>
+				<p>I've made a note that I've sent you this email, so I won't bother you again.</p>
 				<p>If I was helpful, please let my owner know on Twitter - <a href="https://twitter.com/simon_jthompson">@simon_jthompson</a>.</p>
 				<p><b>DomainCanary</b></p>
 			`
@@ -81,6 +81,9 @@ app.get( '/hit/', (req, res) => {
 
 			// Update our originStore.
 			cache.set( 'origins', originStore );
+
+			// Trigger a manual cache push to ensure it's copied up.
+			cache.push();
 
 			// Return ok.
 			return res.json( { status: 'ok' } );
@@ -112,6 +115,9 @@ app.get( '/register/', (req, res) => {
 	let keyStore = ( cache.get( 'keys' ) ) ? cache.get( 'keys' ) : {};
 	keyStore[token] = req.query.email;
 	cache.set( 'keys', keyStore );
+
+	// Trigger a manual cache push to ensure it's copied up.
+	cache.push();
 
 	// Return ok.
 	res.json( {status: 'ok', token: token} );
