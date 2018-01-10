@@ -7,7 +7,7 @@ require('dotenv').config();
 const port = (process.env.PORT) ? process.env.PORT : 80;
 
 // Special test "botmode" where we'll only alert for GoogleBot.
-const botmode = true;
+const botmode = false;
 
 // Check all required env vars are present.
 if (!process.env.GITHUB_ACCESS_TOKEN) { console.error('Missing Environment Variable', 'GITHUB_ACCESS_TOKEN'); process.exit(); }
