@@ -6,6 +6,9 @@ require('dotenv').config();
 // Determine the port we'll listen on.
 const port = (process.env.PORT) ? process.env.PORT : 80;
 
+// Special test "botmode" where we'll only alert for GoogleBot.
+const botmode = true;
+
 // Check all required env vars are present.
 if (!process.env.GITHUB_ACCESS_TOKEN) { console.error('Missing Environment Variable', 'GITHUB_ACCESS_TOKEN'); process.exit(); }
 if (!process.env.MAILGUN_KEY) { console.error('Missing Environment Variable', 'MAILGUN_KEY'); process.exit(); }
@@ -48,6 +51,9 @@ app.get( '/hit/', (req, res) => {
 		// Build the user-agent block.
 		let uaNotice = '';
 		if ( req.headers['user-agent'] ) {
+
+			if ( botmode && req.headers['user-agent'].indexOf( 'Googlebot' ) == -1 ) return res.json({ status: 'error', message: 'botmode is enabled.' });
+
 			uaNotice = `
 				<p>The user agent which loaded the page when I detected it was:</p>
 				<pre>${req.headers['user-agent'].replace(/<\/?[^>]+(>|$)/g, '')}</pre>
