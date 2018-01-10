@@ -106,7 +106,7 @@ app.get( '/register/', (req, res) => {
 	res.header( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept' );
 
 	// Check our parameters exists.
-	if ( !req.query.email || !emailvalidator.validate( req.query.email ) ) return res.json( { status: 'error' } );
+	if ( !req.query.email || !emailvalidator.validate( req.query.email ) ) return res.send( 'Unable to generate token.' );
 
 	// Generate the email token.
 	let token = crypto.createHash('md5').update(req.query.email).digest('hex').toString();
@@ -120,7 +120,7 @@ app.get( '/register/', (req, res) => {
 	cache.push();
 
 	// Return ok.
-	res.json( {status: 'ok', token: token} );
+	res.send( token );
 } );
 
 // Setup the persistent cache in a GitHub gist.
